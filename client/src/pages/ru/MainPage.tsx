@@ -22,8 +22,10 @@ const MainPage = () => {
 
   useEffect(() => {
     fetchShoes();
+    // localStorage.clear()
     console.log(localStorage.getItem("goods"));
     console.log(localStorage.getItem("isAdmin"));
+    console.log(localStorage.getItem("user"));
   }, []);
 
   useEffect(() => {

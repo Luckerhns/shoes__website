@@ -1,8 +1,8 @@
-import AdminPage from "../pages/ru/AdminPage";
+import AdminPage from "../components/Auth/AdminComponent";
 import BasketPage from "../pages/ru/BasketPage";
 import GoodPage from "../pages/ru/GoodPage";
 import MainPage from "../pages/ru/MainPage";
-import UserPage from "../pages/ru/UserPage";
+import AuthPage from "../pages/ru/AuthPage";
 import { IRoute } from "../types/routes";
 import { PrivateRoutesEnum, PublicRoutesEnum } from "./consts";
 
@@ -13,9 +13,8 @@ export const publicRoutes: IRoute[] = [
 ];
 
 export const privateRoutes: IRoute[] = [
-  localStorage.getItem("isAdmin")
-    ? { path: PrivateRoutesEnum.AdminPage, element: AdminPage }
-    : { path: PublicRoutesEnum.UserPath, element: UserPage },
+  { path: PrivateRoutesEnum.AdminPage, element: AdminPage },
+  { path: PublicRoutesEnum.UserPath, element: AuthPage },
   { path: PublicRoutesEnum.MainPath, element: MainPage },
   { path: PublicRoutesEnum.BasketPath, element: BasketPage },
 ];

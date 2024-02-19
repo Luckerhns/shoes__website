@@ -13,7 +13,8 @@ import { PublicRoutesEnum } from "./utils/consts";
 import NavigateSetter from "./components/Functions/Navigate";
 
 const App: FC = () => {
-  const isAuth = Boolean(localStorage.getItem("isAuth"));
+  const isAuth = Boolean(localStorage.getItem("user"));
+  console.log(isAuth)
 
   return (
     <BrowserRouter>

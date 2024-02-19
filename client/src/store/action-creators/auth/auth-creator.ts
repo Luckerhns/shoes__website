@@ -44,17 +44,20 @@ export const AuthActionCreators = {
             });
             if (typeof data !== "string") {
               const user = JSON.stringify(data.user);
-              console.log(data)
+              console.log(data);
               dispatch(
                 AuthActionCreators.setUser({ username, password, email })
               );
               dispatch(AuthActionCreators.setIsAuth(true));
               localStorage.setItem("user", user);
               localStorage.setItem("isAuth", "true");
-              // localStorage.setItem("isAdmin", data.user.role)
+              localStorage.setItem("isAdmin", data.role);
+              console.log(data, data.user.role);
               dispatch(AuthActionCreators.setIsLoading(false));
             } else {
-              dispatch(AuthActionCreators.setError("Такой пользователь уже существует"))
+              dispatch(
+                AuthActionCreators.setError("Такой пользователь уже существует")
+              );
             }
             // window.location.reload();
           } catch (error) {
@@ -73,18 +76,31 @@ export const AuthActionCreators = {
           dispatch(AuthActionCreators.setIsLoading(true));
           const data = await login({ email: email, password: password });
           if (data) {
-            const user = data.user;
-            dispatch(
-              AuthActionCreators.setUser({
-                email: user.email,
-                password: user.password,
-                username: [user.firstname, user.lastname],
-              })
-            );
-            localStorage.setItem("user", JSON.stringify(user));
-            localStorage.setItem("isAuth", "true");
-            dispatch(AuthActionCreators.setIsLoading(false));
-            window.location.reload();
+            try {
+              const data: any | string = await login({
+                email: email,
+                password: password,
+              });
+              if (typeof data !== "string") {
+                const user = JSON.stringify(data.user);
+                console.log(data);
+                dispatch(AuthActionCreators.setIsAuth(true));
+                localStorage.setItem("user", user);
+                localStorage.setItem("isAuth", "true");
+                localStorage.setItem("isAdmin", data.user.role);
+                console.log(data, data.user.role);
+                dispatch(AuthActionCreators.setIsLoading(false));
+              } else {
+                dispatch(
+                  AuthActionCreators.setError(
+                    "Такой пользователь уже существует"
+                  )
+                );
+              }
+              // window.location.reload();
+            } catch (error) {
+              console.log(error);
+            }
           }
         } catch (error) {
           dispatch(

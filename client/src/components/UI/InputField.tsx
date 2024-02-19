@@ -1,5 +1,5 @@
 import React, { Dispatch, FC, SetStateAction } from "react";
-import styles from "../../styles/UserPage.module.scss";
+import styles from "../../styles/UserPage/UserComponent.module.scss";
 import { ICustomInput } from "../../types/types";
 
 const InputField: FC<ICustomInput> = ({ type, inputType, value, onChange, disabled }) => {

@@ -2,7 +2,7 @@
 
 .basket__container {
   width: 90vw;
-  min-height: calc(100vh - 80px - 80px - 10px + 50px);
+  min-height: $bodyHeight;
   margin: auto;
   z-index: 100;
   display: flex;
