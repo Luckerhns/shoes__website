@@ -60,7 +60,7 @@ const GoodCard: FC<IShoes> = ({
       <div className={styles.item__buy__button}>
         <div className={styles.button}>
           <img src={basket} />
-          <div className={styles.buy__button}>В корзину</div>
+          <div className={styles.buy__button} onClick={() => {}}>В корзину</div>
         </div>
       </div>
     </div>

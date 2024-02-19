@@ -8,4 +8,6 @@ export enum PublicRoutesEnum {
   TypePath = '/catalog/' + ":type"
 }
 
-export enum PrivateRoutesEnum {}
+export enum PrivateRoutesEnum {
+  AdminPage = '/admin-panel'
+}

@@ -32,6 +32,12 @@ Good.belongsToMany(User, { through: "basket" });
 Order.hasMany(Employee);
 Employee.belongsToMany(Order, { through: "employee_order" });
 
+Brand.hasMany(Basket)
+Basket.belongsTo(Brand)
+
+Type.hasMany(Basket)
+Basket.belongsTo(Type)
+
 Employee.belongsTo(Position);
 Position.hasMany(Employee);
 

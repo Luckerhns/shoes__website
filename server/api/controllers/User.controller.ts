@@ -19,7 +19,19 @@ class UserController {
       const body = req.body;
 
       const user = await UserService.registration(body);
-
+      res.cookie("user", user.user, {
+        maxAge: dtoCookieExpires,
+        httpOnly: true,
+      });
+      res.cookie("accessToken", user.accessToken, {
+        maxAge: dtoCookieExpires,
+        httpOnly: true,
+      });
+      res.cookie("refreshToken", user.refreshToken, {
+        maxAge: refreshCookieExpires,
+        httpOnly: true,
+      });
+      
       return res.json(user);
     } catch (error) {
       next(error);
@@ -92,7 +104,7 @@ class UserController {
   public static async getAll(req, res, next) {
     try {
       const body = req.body;
-      const users = await UserService.getAll(User, body ?? body);
+      const users = await UserService.getAll(body);
 
       return res.json(users);
     } catch (error) {

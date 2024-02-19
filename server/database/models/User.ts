@@ -14,6 +14,7 @@ const User = sequelize.define("user", {
     discount: { type: DataTypes.FLOAT },
     isActivated: { type: DataTypes.BOOLEAN, defaultValue: false },
     activationLink: { type: DataTypes.STRING },
+    role: {type: DataTypes.STRING, defaultValue: "USER"}
 });
 
 export default User;

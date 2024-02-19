@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MainLayout from "../../Layout/MainLayout";
 import styles from "../../styles/BasketPage.module.scss";
 import BasketGood from "../../components/UI/BasketGood";
+import { $getBasket } from "../../http/basketApi";
+import axios from "axios";
 
 const BasketPage = () => {
+  const [userBasket, setUserBasket] = useState([]);
+  const getBasket = async () => {
+    const userId = 1;
+    const { data } = await axios.post(
+      "http://localhost:5000/api/basket/getUsersBasket",
+      { userId: userId }
+    );
+    // setUserBasket(data["rows"]);
+    console.log(data["rows"], 100);
+  };
+
+  useEffect(() => {
+    getBasket();
+  }, []);
   return (
     <MainLayout>
       <section className={styles.basket__container}>

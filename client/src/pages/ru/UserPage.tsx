@@ -6,26 +6,40 @@ import ReactFlagsSelect from "react-flags-select/build/components/ReactFlagsSele
 import PhoneInput from "../../components/UI/PhoneInput";
 import InputField from "../../components/UI/InputField";
 import { checkEmail } from "../../components/Functions/CheckEmail";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { PublicRoutesEnum } from "../../utils/consts";
 
 const UserPage = () => {
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
   const [firstname, setFirstname] = useState(userData.firstname);
   const [lastname, setLastname] = useState(userData.lastname);
   const [partonymic, setPatronymic] = useState("");
-  const [email, setEmail] = useState(userData.email);
+  const [email, setEmail] = useState(userData.email)
   const [isCorrectEmail, setIsCorrectEmail] = useState(true);
+  const navigate = useNavigate();
+  const { error } = useTypedSelector((state) => state.auth);
 
   useEffect(() => {
-    const isValidEmail = checkEmail(email);
-    isValidEmail ? setIsCorrectEmail(true) : setIsCorrectEmail(false);
-    const user = localStorage.getItem("user");
+    try {
+      const isValidEmail = checkEmail(email);
+      isValidEmail ? setIsCorrectEmail(true) : setIsCorrectEmail(false);
+      const user = localStorage.getItem("user");
+      console.log(userData)
+      if (!user) {
+        console.log("ERROR");
+      }
+    } catch (err) {
+      navigate(PublicRoutesEnum.CatalogPath);
+      console.log(error, "ERROR");
+    }
   }, [email]);
 
   function logout() {
     // localStorage.removeItem("user")
-    localStorage.removeItem("user")
-    localStorage.removeItem("isAuth")
-    window.location.reload()
+    localStorage.removeItem("user");
+    localStorage.removeItem("isAuth");
+    window.location.reload();
   }
 
   const [phone, setPhone] = useState();
@@ -98,7 +112,9 @@ const UserPage = () => {
           </div>
           <div className={styles.user__image}>
             <img src={image} />
-          <div className={styles.exit__btn} onClick={() => logout()}>выйти</div>
+            <div className={styles.exit__btn} onClick={() => logout()}>
+              выйти
+            </div>
           </div>
         </div>
       </div>

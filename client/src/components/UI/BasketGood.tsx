@@ -11,7 +11,7 @@ const BasketGood = () => {
   const param = 'dsadsa'
   const goodName = 'yahoo'
   const toCard = () => {
-    navigate(`${PublicRoutesEnum.GoodPath}/${param}/${goodName}`);
+    // navigate(`${PublicRoutesEnum.GoodPath}/${param}/${goodName}`);
   };
   return (
     <div className={styles.basket__good} onClick={toCard}>

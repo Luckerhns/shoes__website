@@ -8,6 +8,7 @@ import store from "./store/store";
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLDivElement
 );
+
 root.render(
     <Provider store={store}>
         <App />

@@ -37,24 +37,26 @@ export const AuthActionCreators = {
         dispatch(AuthActionCreators.setIsLoading(true));
         setTimeout(async () => {
           try {
-            const data: any = await registration({
+            const data: any | string = await registration({
               username: username,
               email: email,
               password: password,
             });
-            if (data) {
+            if (typeof data !== "string") {
+              const user = JSON.stringify(data.user);
+              console.log(data)
               dispatch(
                 AuthActionCreators.setUser({ username, password, email })
               );
               dispatch(AuthActionCreators.setIsAuth(true));
-              const user = JSON.stringify(data.user);
               localStorage.setItem("user", user);
               localStorage.setItem("isAuth", "true");
+              // localStorage.setItem("isAdmin", data.user.role)
               dispatch(AuthActionCreators.setIsLoading(false));
-              window.location.reload();
             } else {
-              dispatch(AuthActionCreators.setError("Ошибка при регистрации"));
+              dispatch(AuthActionCreators.setError("Такой пользователь уже существует"))
             }
+            // window.location.reload();
           } catch (error) {
             console.log(error);
           }
@@ -68,7 +70,7 @@ export const AuthActionCreators = {
     try {
       setTimeout(async () => {
         try {
-          dispatch(AuthActionCreators.setIsLoading(true))
+          dispatch(AuthActionCreators.setIsLoading(true));
           const data = await login({ email: email, password: password });
           if (data) {
             const user = data.user;
@@ -82,15 +84,17 @@ export const AuthActionCreators = {
             localStorage.setItem("user", JSON.stringify(user));
             localStorage.setItem("isAuth", "true");
             dispatch(AuthActionCreators.setIsLoading(false));
-            window.location.reload()
+            window.location.reload();
           }
         } catch (error) {
-          dispatch(AuthActionCreators.setError("Ошибка при входе, попробуйте позже"))
+          dispatch(
+            AuthActionCreators.setError("Ошибка при входе, попробуйте позже")
+          );
           console.log(error);
         }
       });
     } catch (error) {
-      dispatch(AuthActionCreators.setError("Неправильно введенные данные"))
+      dispatch(AuthActionCreators.setError("Неправильно введенные данные"));
       console.log(error);
     }
   },

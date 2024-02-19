@@ -1,4 +1,5 @@
-import { Basket } from "../../database/Relations";
+import { Basket, Order, Type } from "../../database/Relations";
+import Brand from "../../database/models/Brand";
 import ShoesController from "../controllers/Good.controller";
 import { ModelException } from "../exceptions/ModelException";
 import ShoesService from "./Good.service";
@@ -18,7 +19,7 @@ export default class BasketService {
   public static async getUserBasket(userId) {
     try {
       const usersBasket = await Basket.findAndCountAll({
-        where: { userId: userId },
+        where: { userId: userId }, include: [Brand, Type]
       });
 
       return usersBasket;

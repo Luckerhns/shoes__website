@@ -18,6 +18,7 @@ const AuthModal: FC = () => {
     if (e.key === "Escape") closeModal();
   });
   const { isOpen } = useTypedSelector((state) => state.modal);
+  const { error } = useTypedSelector((state) => state.auth);
   const { closeModal, openModal, registration, login } = useActions();
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [phone, setPhone] = useState<any>();
@@ -39,6 +40,7 @@ const AuthModal: FC = () => {
     const isCorrect = mailExp.test(String(e).toLowerCase());
     if (!isCorrect) setEmailError("Некорректная почта");
     else setEmailError("");
+    console.log(error)
   }
 
   function checkPassword(e: any) {
@@ -137,6 +139,7 @@ const AuthModal: FC = () => {
               >
                 {emailError}
               </div>
+                <div style={error ? {opacity: 1, color: 'red'} : {opacity: 0}}>{error}</div>
             </div>
             <div className={styles.input__container}>
               <span>Password</span>
@@ -178,7 +181,7 @@ const AuthModal: FC = () => {
               <button
                 className={styles.registration__button}
                 disabled={activeButton}
-                onClick={() => registration(email, password, userData)}
+                onClick={async () => await registration(email, password, userData)}
               >
                 Продолжить
               </button>

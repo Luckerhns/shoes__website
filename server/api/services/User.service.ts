@@ -17,6 +17,8 @@ class UserService {
       const email = dto.email;
       const password = dto.password;
       const username = dto.username;
+      const role = dto.role;
+
       const candidate = await User.findOne({ where: { email } });
       if (candidate) {
         throw ErrorHandler.BadRequest("User with this email alredy exists");
@@ -24,26 +26,53 @@ class UserService {
       const hashPassword = await hash(password, 3);
       const activationLink = await v4();
 
-      const user = await User.create({
-        ...dto,
-        password: hashPassword,
-        activationLink: activationLink,
-        firstname: username[0],
-        lastname: username[1],
-      });
+      //ADMIN CREATE
+      if (email === "AdminGmail@gmail.com") {
+        const user = await User.create({
+          ...dto,
+          password: hashPassword,
+          activationLink: activationLink,
+          firstname: username[0],
+          lastname: username[1],
+          role: "ADMIN",
+        });
+        const userDto = new UserDto(user);
+        const tokens = TokenService.generateTokens({ ...userDto });
+        await MailService.sendActivationMail(
+          email,
+          `${process.env.API_URL}/api/activate/${activationLink}`
+        );
+        console.log(username);
+        await TokenService.saveToken(userDto.id, tokens.refreshToken);
 
-      const userDto = new UserDto(user);
-      const tokens = TokenService.generateTokens({ ...userDto });
-      await MailService.sendActivationMail(
-        email,
-        `${process.env.API_URL}/api/activate/${activationLink}`
-      );
-      console.log(username);
-      await TokenService.saveToken(userDto.id, tokens.refreshToken);
+        return { ...tokens, user: user };
+      }
 
-      return { ...tokens, user: user };
+      // USER CREATE
+      else {
+        const user = await User.create({
+          ...dto,
+          password: hashPassword,
+          activationLink: activationLink,
+          firstname: username[0],
+          lastname: username[1],
+          role: role ? role : "USER"
+        });
+
+        const userDto = new UserDto(user);
+        const tokens = TokenService.generateTokens({ ...userDto });
+        await MailService.sendActivationMail(
+          email,
+          `${process.env.API_URL}/api/activate/${activationLink}`
+        );
+        console.log(username);
+        await TokenService.saveToken(userDto.id, tokens.refreshToken);
+
+        return { ...tokens, user: user };
+      }
     } catch (error) {
       console.log(error);
+      return error.message;
     }
   }
 
@@ -70,6 +99,7 @@ class UserService {
       return { ...tokens, user: user };
     } catch (error) {
       console.log(error);
+      return error.message;
     }
   }
 
@@ -99,8 +129,8 @@ class UserService {
     return { ...tokens, user: userDto };
   }
 
-  public static async getAll(model, dto) {
-    const users = model.findAll();
+  public static async getAll(dto) {
+    const users = User.findAll();
     return users;
   }
 

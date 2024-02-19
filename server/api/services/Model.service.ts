@@ -7,12 +7,12 @@ class ModelService {
         return model
     }
     public static async getOne(dto, included?) {
-        const model = await Model.findOne({where: {...dto}, include: included})
+        const model = await Model.findOne({where: dto, include: included})
 
         return model
     }
     public static async getAll(dto, included?) {
-        const model = await Model.findAndCountAll({where: {...dto}, include: included})
+        const model = await Model.findAndCountAll({where: dto, include: included})
 
         return model
     }

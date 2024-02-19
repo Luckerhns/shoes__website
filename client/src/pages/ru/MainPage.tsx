@@ -22,13 +22,14 @@ const MainPage = () => {
 
   useEffect(() => {
     fetchShoes();
-    console.log(localStorage.getItem("goods"))
+    console.log(localStorage.getItem("goods"));
+    console.log(localStorage.getItem("isAdmin"));
   }, []);
 
   useEffect(() => {
-    const goods: any = localStorage.getItem("goods")
-    const parsed: IShoes[] = JSON.parse(goods)
-    setShoesState(parsed)
+    const goods: any = localStorage.getItem("goods");
+    const parsed: IShoes[] = JSON.parse(goods);
+    setShoesState(parsed);
   }, []);
 
   return (
@@ -51,7 +52,19 @@ const MainPage = () => {
             </div>
           </div>
           <div className={styles.goods__container}>
-            {shoesState && shoesState.map((e: IShoes) => <GoodCard type={e.type.type} brand={e.brand.brand} color={e.color} info={e.info} model={e.model} price={e.price} shoes={e.shoes} size={e.size}  />)}
+            {shoesState &&
+              shoesState.map((e: IShoes) => (
+                <GoodCard
+                  type={e.type.type}
+                  brand={e.brand.brand}
+                  color={e.color}
+                  info={e.info}
+                  model={e.model}
+                  price={e.price}
+                  shoes={e.shoes}
+                  size={e.size}
+                />
+              ))}
           </div>
         </div>
       </div>

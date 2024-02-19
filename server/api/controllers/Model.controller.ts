@@ -25,17 +25,15 @@ class ModelController {
                 }
             }
 
-            const hasModel = await isModelExists(Model, {model: params.model})
+            // const hasModel = await isModelExists(Model, {model: params.model})
 
-            if(hasModel) {
-                throw new ModelException(409, 'This model of footwear has exists')
-            }
+            // if(hasModel) {
+            //     throw new ModelException(409, 'This model of footwear has exists')
+            // }
 
             const model = await ModelService.create({model: params.model, brandId: _brand.dataValues.id, typeId: _type.dataValues.id}).catch(e => res.json(e))
 
-            await model.addSeason(_season)
-            
-            const newModel = await ModelService.getOne({model: params.model}, [Season, Type, Brand])
+            const newModel = await ModelService.getOne({model: params.model, id: model.dataValues.id}, [Season, Type, Brand])
 
             return res.json(newModel);
         } catch (error) {

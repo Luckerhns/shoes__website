@@ -8,8 +8,8 @@ import UserService from "../services/User.service";
 export default class BasketController {
   public static async addToBasket(req, res, next) {
     try {
-      const goodId = req.body.id;
-      const userId = req.cookies.user.id;
+      const goodId = req.body.goodId;
+      const userId = req.body.userId;
 
       // const good = await ShoesService.getOne({ id: goodId }, [Type, Brand, Size, Season]);
 
@@ -24,9 +24,9 @@ export default class BasketController {
   public static async getUserBasket(req, res, next) {
     try {
       
-      const userId = req.cookies.user.id
-      
+      const userId = req.body.userId
       const basket = await BasketService.getUserBasket(userId)
+      console.log(basket)
       
       return res.json(basket)
     } catch (error) {
