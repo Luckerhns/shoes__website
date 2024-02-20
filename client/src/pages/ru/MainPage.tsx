@@ -23,7 +23,7 @@ const MainPage = () => {
   useEffect(() => {
     fetchShoes();
     // localStorage.clear()
-    console.log(localStorage.getItem("goods"));
+    // console.log(localStorage.getItem("goods"));
     console.log(localStorage.getItem("isAdmin"));
     console.log(localStorage.getItem("user"));
   }, []);
@@ -32,6 +32,8 @@ const MainPage = () => {
     const goods: any = localStorage.getItem("goods");
     const parsed: IShoes[] = JSON.parse(goods);
     setShoesState(parsed);
+    console.log(parsed)
+    console.log(shoesState)
   }, []);
 
   return (
@@ -57,8 +59,8 @@ const MainPage = () => {
             {shoesState &&
               shoesState.map((e: IShoes) => (
                 <GoodCard
-                  type={e.type.type}
-                  brand={e.brand.brand}
+                  type={e.type}
+                  brand={e.brand}
                   color={e.color}
                   info={e.info}
                   model={e.model}

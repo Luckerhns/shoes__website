@@ -1,5 +1,5 @@
 export interface IGoodParams {
-    good: string;
+    shoes: string;
     type: string;
     price: number;
     brand: string;

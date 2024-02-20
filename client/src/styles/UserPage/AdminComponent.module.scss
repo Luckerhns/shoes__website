@@ -17,9 +17,17 @@
 
     .admin__panel {
       width: 70vw;
-      height: 50vw;
+      height: 600px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      flex-direction: column;
       background-color: rgb(183, 183, 183);
       border-radius: 10px;
+      padding: 50px 200px;
+      
+          font-size: 1vw;
     }
   }
 }

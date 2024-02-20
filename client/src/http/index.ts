@@ -11,6 +11,10 @@ const $authUser = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
 });
 
+const $admin = axios.create({
+  baseURL: process.env.REACT_APP_API_URL
+})
+
 const authInterceptor = (config: InternalAxiosRequestConfig<Headers>) => {
     config.headers.authorization = `Bearer ${localStorage.getItem("token")}`;
     return config;
@@ -18,4 +22,4 @@ const authInterceptor = (config: InternalAxiosRequestConfig<Headers>) => {
 
 $authUser.interceptors.request.use(authInterceptor);
 
-export { $user, $authUser };
+export { $user, $authUser, $admin };

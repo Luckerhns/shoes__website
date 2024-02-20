@@ -17,14 +17,14 @@ import path from "path";
 class GoodController {
   public static async createNew(req: Request, res: Response, next) {
     try {
-      const { good, type, price, brand, model, season, size }: IGoodParams =
+      const { shoes, type, price, brand, model, season, size }: IGoodParams =
         req.body;
 
       // @ts-ignore
-      const { img } = req.files;
+      // const { img } = req.files;
 
-      let filename = v4() + ".png";
-      img.mv(path.resolve(__dirname, "..", "static", filename));
+      // let filename = v4() + ".png";
+      // img.mv(path.resolve(__dirname, "..", "static", filename));
 
       const _type = await TypeService.getOne({ type: type });
 
@@ -34,25 +34,23 @@ class GoodController {
 
       const _model = await ModelService.getOne({ model: model });
 
-      const _size = await SizeService.create({ size: size });
 
-      const models = [_type, _brand, _size, _model];
+      const models = [_type, _brand, _model];
 
       for (let i = 0; i < models.length; i++) {
         if (!models[i]) {
           throw new ModelException(404, `Model #${i} is undefined`);
         }
       }
-
+      
       const _good = await GoodService.create({
-        good: good,
-        price: price,
+        good: shoes,
+        price: 123213,
         // typeId: _type.dataValues.id,
         // brandId: _brand.dataValues.id,
         // seasonId: _season.dataValues.id,
-        // sizeId: _size.dataValues.id,
         // modelId: _model.dataValues.id,
-        img: filename,
+        // img: filename,
       });
 
       // const _good = await Good.create({

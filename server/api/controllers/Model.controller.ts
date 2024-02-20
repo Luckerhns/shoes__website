@@ -17,7 +17,7 @@ class ModelController {
             const _brand = await BrandService.getOne({brand: params.brand})
             const _type = await TypeService.getOne({type: params.type})
 
-            const _models = [_season, _brand, _type]
+            const _models = ['лето', _brand, _type]
 
             for(let i = 0; i < _models.length; i++) {
                 if(!_models[i]) {
