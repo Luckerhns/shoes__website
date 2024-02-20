@@ -47,13 +47,19 @@ class GoodController {
       const _good = await GoodService.create({
         good: good,
         price: price,
-        typeId: _type.dataValues.id,
-        brandId: _brand.dataValues.id,
-        seasonId: _season.dataValues.id,
-        sizeId: _size.dataValues.id,
-        modelId: _model.dataValues.id,
+        // typeId: _type.dataValues.id,
+        // brandId: _brand.dataValues.id,
+        // seasonId: _season.dataValues.id,
+        // sizeId: _size.dataValues.id,
+        // modelId: _model.dataValues.id,
         img: filename,
       });
+
+      // const _good = await Good.create({
+      //   good: 'asadas',
+      //   price: 1100.00,
+      //   img: filename
+      // })
 
       // const newgood = await GoodService.getOne(
       //   { good: _good.dataValues.good },
